@@ -1,22 +1,38 @@
-#include "Math/Math.h"
-#include "Core/Random.h"
+#include <Core/Random.h>
+#include <Math/Vecttor2.h>
 #include <iostream>
-#include <algorithm>
+#include <Renderer/Renderer.h>
 
-#define NAME "Nick\n"
+int main(int argc, char* argv[]) {
+    bacon::Renderer renderer;
+    renderer.Initialize();
+    renderer.CreateWindow("Bacon Engine", 1280, 1024);
 
-using namespace bacon;
+    SDL_Event e;
+    bool quit = false;
 
-int main() {
-	const float num = math::RadToDeg(math::pi);
-	math::min(5, 3);
-	math::clamp(1,2,3);
+    vec2(30, 40);
 
-	std::cout << NAME;
-	std::cout << "Hello World\n";
-	std::cout << math::pi << std::endl;
+    // Define a rectangle
+    SDL_FRect greenSquare{ 270, 190, 200, 200 };
 
-	for (int i = 0; i < 10; i++) {
-		std::cout << random::getRandomFloat() << std::endl;
-	}
+    while (!quit) {
+        while (SDL_PollEvent(&e)) {
+            if (e.type == SDL_EVENT_QUIT) {
+                quit = true;
+            }
+        }
+    }
+
+    renderer.SetColor(bacon::random::getRandom(256), bacon::random::getRandom(256), bacon::random::getRandom(256));
+    renderer.Clear();
+
+    renderer.SetColor(bacon::random::getRandom(256), bacon::random::getRandom(256), bacon::random::getRandom(256));
+    renderer.DrawLine(bacon::random::getRandomFloat() * 1280, bacon::random::getRandomFloat() * 1024, bacon::random::getRandomFloat() * 1280, bacon::random::getRandomFloat() * 1024);
+    
+    renderer.SetColor(bacon::random::getRandom(256), bacon::random::getRandom(256), bacon::random::getRandom(256));
+    renderer.DrawPoint(v.x, v.y);
+    renderer.DrawPoint(bacon::random::getRandomFloat() * 1280, bacon::random::getRandomFloat() * 1024);
+
+    renderer.Present();
 }
