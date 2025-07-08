@@ -1,5 +1,7 @@
 #pragma once
+#include <SDL3/SDL.h>
 #include <algorithm>
+#include <cmath>
 
 namespace bacon {
 	namespace math {
@@ -17,7 +19,15 @@ namespace bacon {
 		}*/
 		using std::min;
 		using std::max;
-		//using std::clamp;
+		using std::clamp;
+		using std::sqrt;
+		using std::sqrtf;
+		using std::sin;
+		using std::sinf;
+		using std::cos;
+		using std::cosf;
+		using std::tan;
+		using std::tanf;
 	}
 }
 	
