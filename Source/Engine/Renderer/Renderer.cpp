@@ -22,7 +22,7 @@ namespace bacon {
         if (m_window == nullptr) {
             std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
             SDL_Quit();
-            return false;
+            return true;
         }
 
         m_renderer = SDL_CreateRenderer(m_window, NULL);
