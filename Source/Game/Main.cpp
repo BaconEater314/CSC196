@@ -6,16 +6,29 @@
 
 #include <vector>
 #include <iostream>
+#include <fmod.hpp>
 
 int main(int argc, char* argv[]) {
+    //Making Time
     bacon::Time time;
     
+    //Initialize Renderer
     bacon::Renderer renderer;
     renderer.Initialize();
     renderer.CreateWindow("Bacon Engine", 1280, 1024);
 
+    //Initialize Input Ssytem
     bacon::InputSystem input;
     input.Initialize();
+
+    // create audio system
+    FMOD::System* audio;
+    FMOD::System_Create(&audio);
+
+    void* extradriverdata = nullptr;
+    audio->init(32, FMOD_INIT_NORMAL, extradriverdata);
+
+
 
     SDL_Event e;
     bool quit = false;
@@ -31,6 +44,28 @@ int main(int argc, char* argv[]) {
     // Define a rectangle
     SDL_FRect greenSquare{ 270, 190, 200, 200 };
 
+    FMOD::Sound* sound = nullptr;
+    
+    std::vector<FMOD::Sound*> sounds;
+    audio->createSound("drums/bass.wav", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+
+    audio->createSound("drums/snare.wav", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+
+    audio->createSound("drums/clap.wav", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+
+    audio->createSound("drums/cowbell.wav", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+
+    audio->createSound("pipe.wav", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+    audio->createSound("fart.wav", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+    audio->createSound("yippee.wav", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+
     // Main loop
     while (!quit) {
         time.Tick();
@@ -39,18 +74,49 @@ int main(int argc, char* argv[]) {
                 quit = true;
             }
         }
+        if (input.GetKeyDown(SDL_SCANCODE_Q) && !input.GetPrevKeyDown(SDL_SCANCODE_Q)) {
+            audio->playSound(sounds[0], 0, false, nullptr);
+            std::cout << "Q pressed\n";
+        }
+        else if (input.GetKeyDown(SDL_SCANCODE_W) && !input.GetPrevKeyDown(SDL_SCANCODE_W)) {
+            audio->playSound(sounds[1], 0, false, nullptr);
+            std::cout << "W pressed\n";
+        }
+        else if (input.GetKeyDown(SDL_SCANCODE_E) && !input.GetPrevKeyDown(SDL_SCANCODE_E)) {
+            audio->playSound(sounds[2], 0, false, nullptr);
+            std::cout << "E pressed\n";
+        }
+        else if (input.GetKeyDown(SDL_SCANCODE_R) && !input.GetPrevKeyDown(SDL_SCANCODE_R)) {
+            audio->playSound(sounds[3], 0, false, nullptr);
+            std::cout << "R pressed\n";
+        }
+        else if (input.GetKeyDown(SDL_SCANCODE_P) && !input.GetPrevKeyDown(SDL_SCANCODE_P)) {
+            audio->playSound(sounds[4], 0, false, nullptr);
+            std::cout << "P pressed\n";
+        }
+        else if (input.GetKeyDown(SDL_SCANCODE_F) && !input.GetPrevKeyDown(SDL_SCANCODE_F)) {
+            audio->playSound(sounds[5], 0, false, nullptr);
+            std::cout << "F pressed\n";
+        }
+        else if (input.GetKeyDown(SDL_SCANCODE_Y) && !input.GetPrevKeyDown(SDL_SCANCODE_Y)) {
+            audio->playSound(sounds[6], 0, false, nullptr);
+            std::cout << "Y pressed\n";
+        }
 
+        
+        
+        audio->update();
         input.Update();
         if (input.GetKeyPressed(SDL_SCANCODE_A)) {
             std::cout << "pressed\n";
         }
 
-        if (input.GetMouseButtonDown(0)) {
+        if (input.GetMouseButtonDown((uint8_t)bacon::InputSystem::MouseButton::Left)) {
             std::cout << "Mouse pressed\n";
         }
         
         bacon::vec2 mouse = input.GetMoustPosition();
-        std::cout << mouse.x << " " << mouse.y << std::endl;
+        //std::cout << mouse.x << " " << mouse.y << std::endl;
 
         renderer.SetColor(0, 0, 0);
         renderer.Clear();
