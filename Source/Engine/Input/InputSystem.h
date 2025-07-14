@@ -33,7 +33,7 @@ namespace bacon {
 		bool GetMouseButtonPressed(uint8_t button) { return !m_prevMouseButtonState[(uint8_t)button] && m_mouseButtonState[(uint8_t)button]; }
 		bool GetPrevMouseButtonPressed(uint8_t button) { return m_prevMouseButtonState[(uint8_t)button] && !m_mouseButtonState[(uint8_t)button]; }
 
-		const vec2& GetMoustPosition() const { return m_mousePosition; }
+		const vec2& GetMousePosition() const { return m_mousePosition; }
 		const vec2& GetPrevMoustPosition() const { return m_prevMousePosition; }
 
 	private:

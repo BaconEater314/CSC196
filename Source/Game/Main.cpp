@@ -3,15 +3,14 @@
 #include "Renderer/Renderer.h"
 #include "Core/Time.h"
 #include "Input/InputSystem.h"
+#include "Audio/AudioSystem.h"
 
 #include <vector>
-#include <iostream>
-#include <fmod.hpp>
 
 int main(int argc, char* argv[]) {
     //Making Time
     bacon::Time time;
-    
+
     //Initialize Renderer
     bacon::Renderer renderer;
     renderer.Initialize();
@@ -22,12 +21,8 @@ int main(int argc, char* argv[]) {
     input.Initialize();
 
     // create audio system
-    FMOD::System* audio;
-    FMOD::System_Create(&audio);
-
-    void* extradriverdata = nullptr;
-    audio->init(32, FMOD_INIT_NORMAL, extradriverdata);
-
+    bacon::AudioSystem audio;
+    audio.Initialize();
 
 
     SDL_Event e;
@@ -44,27 +39,17 @@ int main(int argc, char* argv[]) {
     // Define a rectangle
     SDL_FRect greenSquare{ 270, 190, 200, 200 };
 
-    FMOD::Sound* sound = nullptr;
-    
-    std::vector<FMOD::Sound*> sounds;
-    audio->createSound("drums/bass.wav", FMOD_DEFAULT, 0, &sound);
-    sounds.push_back(sound);
+    // sound work
+    audio.addSound("drums/bass.wav", "bass");
+    audio.addSound("drums/snare.wav", "snare");
+    audio.addSound("drums/clap.wav", "clap");
+    audio.addSound("drums/cowbell.wav", "cowbell");
+    audio.addSound("pipe.wav", "pipe");
+    audio.addSound("fart.wav", "fart");
+    audio.addSound("yippee.wav", "yippee");
 
-    audio->createSound("drums/snare.wav", FMOD_DEFAULT, 0, &sound);
-    sounds.push_back(sound);
-
-    audio->createSound("drums/clap.wav", FMOD_DEFAULT, 0, &sound);
-    sounds.push_back(sound);
-
-    audio->createSound("drums/cowbell.wav", FMOD_DEFAULT, 0, &sound);
-    sounds.push_back(sound);
-
-    audio->createSound("pipe.wav", FMOD_DEFAULT, 0, &sound);
-    sounds.push_back(sound);
-    audio->createSound("fart.wav", FMOD_DEFAULT, 0, &sound);
-    sounds.push_back(sound);
-    audio->createSound("yippee.wav", FMOD_DEFAULT, 0, &sound);
-    sounds.push_back(sound);
+    // drawing work
+    std::vector<bacon::vec2> points;
 
     // Main loop
     while (!quit) {
@@ -74,78 +59,63 @@ int main(int argc, char* argv[]) {
                 quit = true;
             }
         }
+
+        //soundboard
         if (input.GetKeyDown(SDL_SCANCODE_Q) && !input.GetPrevKeyDown(SDL_SCANCODE_Q)) {
-            audio->playSound(sounds[0], 0, false, nullptr);
-            std::cout << "Q pressed\n";
+            audio.playSound("bass");
+            std::cout << "Bass played\n";
         }
-        else if (input.GetKeyDown(SDL_SCANCODE_W) && !input.GetPrevKeyDown(SDL_SCANCODE_W)) {
-            audio->playSound(sounds[1], 0, false, nullptr);
-            std::cout << "W pressed\n";
+        if (input.GetKeyDown(SDL_SCANCODE_W) && !input.GetPrevKeyDown(SDL_SCANCODE_W)) {
+            audio.playSound("snare");
+            std::cout << "Snare played\n";
         }
-        else if (input.GetKeyDown(SDL_SCANCODE_E) && !input.GetPrevKeyDown(SDL_SCANCODE_E)) {
-            audio->playSound(sounds[2], 0, false, nullptr);
-            std::cout << "E pressed\n";
+        if (input.GetKeyDown(SDL_SCANCODE_E) && !input.GetPrevKeyDown(SDL_SCANCODE_E)) {
+            audio.playSound("clap");
+            std::cout << "Clap played\n";
         }
-        else if (input.GetKeyDown(SDL_SCANCODE_R) && !input.GetPrevKeyDown(SDL_SCANCODE_R)) {
-            audio->playSound(sounds[3], 0, false, nullptr);
-            std::cout << "R pressed\n";
+        if (input.GetKeyDown(SDL_SCANCODE_R) && !input.GetPrevKeyDown(SDL_SCANCODE_R)) {
+            audio.playSound("cowbell");
+            std::cout << "Cowbell played\n";
         }
-        else if (input.GetKeyDown(SDL_SCANCODE_P) && !input.GetPrevKeyDown(SDL_SCANCODE_P)) {
-            audio->playSound(sounds[4], 0, false, nullptr);
-            std::cout << "P pressed\n";
+        if (input.GetKeyDown(SDL_SCANCODE_P) && !input.GetPrevKeyDown(SDL_SCANCODE_P)) {
+            audio.playSound("pipe");
+            std::cout << "metal pipe played\n";
         }
-        else if (input.GetKeyDown(SDL_SCANCODE_F) && !input.GetPrevKeyDown(SDL_SCANCODE_F)) {
-            audio->playSound(sounds[5], 0, false, nullptr);
-            std::cout << "F pressed\n";
+        if (input.GetKeyDown(SDL_SCANCODE_F) && !input.GetPrevKeyDown(SDL_SCANCODE_F)) {
+            audio.playSound("fart");
+            std::cout << "reverb fart played\n";
         }
-        else if (input.GetKeyDown(SDL_SCANCODE_Y) && !input.GetPrevKeyDown(SDL_SCANCODE_Y)) {
-            audio->playSound(sounds[6], 0, false, nullptr);
-            std::cout << "Y pressed\n";
-        }
-
-        
-        
-        audio->update();
-        input.Update();
-        if (input.GetKeyPressed(SDL_SCANCODE_A)) {
-            std::cout << "pressed\n";
+        if (input.GetKeyDown(SDL_SCANCODE_Y) && !input.GetPrevKeyDown(SDL_SCANCODE_Y)) {
+            audio.playSound("yippee");
+            std::cout << "yippee played\n";
         }
 
+        // drawing
         if (input.GetMouseButtonDown((uint8_t)bacon::InputSystem::MouseButton::Left)) {
-            std::cout << "Mouse pressed\n";
+            bacon::vec2 position = input.GetMousePosition();
+            if (points.empty()) points.push_back(position);
+            else if ((position - points.back()).Length() > 10) points.push_back(position);
+            renderer.SetColor(bacon::random::getRandom(256), bacon::random::getRandom(256), bacon::random::getRandom(256));
+            renderer.DrawPoint(input.GetMousePosition().x, input.GetMousePosition().y);
         }
-        
-        bacon::vec2 mouse = input.GetMoustPosition();
-        //std::cout << mouse.x << " " << mouse.y << std::endl;
+
+        for (int i = 0; i < (int)points.size() - 1; i++) {
+            renderer.SetColor(bacon::random::getRandom(256), bacon::random::getRandom(256), bacon::random::getRandom(256));
+            renderer.DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
+        }
+
+        if (input.GetKeyDown(SDL_SCANCODE_C) && !input.GetPrevKeyDown(SDL_SCANCODE_C)) {
+            points.clear();
+        }
+
+        audio.Update();
+        input.Update();
 
         renderer.SetColor(0, 0, 0);
         renderer.Clear();
-
-        bacon::vec2 speed{ 120.0f,0 };
-        for (bacon::vec2& star : stars) {
-            star += speed * time.GetDeltaTime();
-            if (star[0] > 1280) star.x = 0;
-            if (star[0] < 0) star.x = 1280;
-            renderer.SetColor(bacon::random::getRandom(256), bacon::random::getRandom(256), bacon::random::getRandom(256));
-            renderer.DrawPoint(star.x, star.y);
-        }
-        for (int i = 0; i < 10; i++) {
-        //renderer.SetColor(bacon::random::getRandom(256), bacon::random::getRandom(256), bacon::random::getRandom(256));
-        //renderer.DrawLine(bacon::random::getRandomFloat() * 1280, bacon::random::getRandomFloat() * 1024, bacon::random::getRandomFloat() * 1280, bacon::random::getRandomFloat() * 1024);
-        }
         renderer.Present();
     }
-
-    
-    
-    renderer.SetColor(bacon::random::getRandom(256), bacon::random::getRandom(256), bacon::random::getRandom(256));
+    audio.Kill();
     renderer.Clear();
-   
-    renderer.SetColor(bacon::random::getRandom(256), bacon::random::getRandom(256), bacon::random::getRandom(256));
-    renderer.DrawLine(bacon::random::getRandomFloat() * 1280, bacon::random::getRandomFloat() * 1024, bacon::random::getRandomFloat() * 1280, bacon::random::getRandomFloat() * 1024);
-    
-    renderer.SetColor(bacon::random::getRandom(256), bacon::random::getRandom(256), bacon::random::getRandom(256));
-    //renderer.DrawPoint(v.x, v.y);
-    renderer.DrawPoint(bacon::random::getRandomFloat() * 1280, bacon::random::getRandomFloat() * 1024);
-    
+
 }
