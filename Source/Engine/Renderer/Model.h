@@ -1,6 +1,7 @@
 #pragma once
 #include "../Math/Vector2.h"
 #include "../Math/Vector3.h"
+#include "../Math/Transform.h"
 
 #include <iostream>
 #include <vector>
@@ -15,7 +16,7 @@ namespace bacon {
 		{ }
 
 		void Draw(class Renderer& renderer, const vec2& position, float rotation, float scale);
-
+		void Draw(class Renderer& renderer, const Transform& transform);
 
 
 	private:

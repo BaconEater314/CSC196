@@ -1,18 +1,20 @@
 #include "Core/Random.h"
 #include "Math/Vector2.h"
+#include "Math/Transform.h"
 #include "Renderer/Renderer.h"
 #include "Core/Time.h"
 #include "Input/InputSystem.h"
 #include "Audio/AudioSystem.h"
 #include "Math/Vector3.h"
 #include "Renderer/Model.h"
+#include "Game/Actor.h"
 
 #include <vector>
 
 int main(int argc, char* argv[]) {
     
     //Adding Models
-    bacon::Model model;
+    //bacon::Model model;
     
     //Making Time
     bacon::Time time;
@@ -59,10 +61,20 @@ int main(int argc, char* argv[]) {
         {5, -5},
         {5, 5},
         {-5, 5},
-        {-5, -5}
+        {-5, -5},
     };
 
+    bacon::Model* model = new bacon::Model{ points, {0,0,1} };
+
+    std::vector <bacon::Actor> actors;
+    for (int i = 0; i < 10; i++) {
+        bacon::Transform transform{ bacon::vec2{640,512},0,20 };
+        bacon::Actor actor{ transform, model };
+        actors.push_back(actor);
+    }
+
     // Main loop
+    // This is where all the code that runs the code goes.
     while (!quit) {
         time.Tick();
         while (SDL_PollEvent(&e)) {
@@ -78,8 +90,34 @@ int main(int argc, char* argv[]) {
         audio.Update();
         input.Update();
 
-        // first line
+        // all control code after this line
         renderer.Clear();
+
+
+        // movement and rotation code
+        float playerSpeed = 200;
+
+        //if (input.GetKeyDown(SDL_SCANCODE_A)) transform.rotation -= bacon::math::degToRad(90 * time.GetDeltaTime());
+        //if (input.GetKeyDown(SDL_SCANCODE_D)) transform.rotation += bacon::math::degToRad(90 * time.GetDeltaTime());
+        bacon::vec2 direction{ 0,0 };
+        if (input.GetKeyDown(SDL_SCANCODE_W)) direction.y = -1; //playerSpeed * time.GetDeltaTime();
+        if (input.GetKeyDown(SDL_SCANCODE_S)) direction.y = 1; // playerSpeed* time.GetDeltaTime();
+        if (input.GetKeyDown(SDL_SCANCODE_A)) direction.x = -1; // playerSpeed* time.GetDeltaTime();
+        if (input.GetKeyDown(SDL_SCANCODE_D)) direction.x = 1; // playerSpeed* time.GetDeltaTime();
+
+        if (direction.LengthSqr() > 0) {
+            for (auto actor : actors) {
+                direction = direction.Normalized();
+                actor.getTransform().position += (direction * playerSpeed) * time.GetDeltaTime();
+            }
+        }
+
+        //drawing shapes
+        //actor.Draw(renderer);
+        for (auto actor : actors) {
+            actor.Draw(renderer);
+        }
+
 
         //quits the program when pressing escape.
         if (input.GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
@@ -95,7 +133,7 @@ int main(int argc, char* argv[]) {
         if (input.GetKeyDown(SDL_SCANCODE_F) && !input.GetPrevKeyDown(SDL_SCANCODE_F)) { audio.playSound("fart"); }
         if (input.GetKeyDown(SDL_SCANCODE_Y) && !input.GetPrevKeyDown(SDL_SCANCODE_Y)) { audio.playSound("yippee"); }
 
-        // drawing
+        // drawing with mouse
         if (input.GetMouseButtonDown((uint8_t)bacon::InputSystem::MouseButton::Left)) {
             bacon::vec2 position = input.GetMousePosition();
             if (points.empty()) points.push_back(position);
@@ -108,7 +146,7 @@ int main(int argc, char* argv[]) {
              renderer.DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
         }
 
-        model.Draw(renderer, input.GetMousePosition(), time.GetTime(), 10.0f);
+        //model.Draw(renderer, input.GetMousePosition(), time.GetTime(), 10.0f);
 
         //clears the screen
         if (input.GetKeyDown(SDL_SCANCODE_C) && !input.GetPrevKeyDown(SDL_SCANCODE_C)) {
@@ -116,10 +154,10 @@ int main(int argc, char* argv[]) {
         }
 
 
-        //final line
+        // all control code before this spot
         renderer.Present();
     }
     audio.Kill();
     renderer.Clear();
-
+    
 }
