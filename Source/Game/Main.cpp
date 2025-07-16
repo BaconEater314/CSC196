@@ -72,13 +72,21 @@ int main(int argc, char* argv[]) {
             
         }
 
+        bacon::vec3 color{ 0,0,0 };
+        renderer.SetColor((float)color.r, color.g, color.b);
+
+        audio.Update();
+        input.Update();
+
+        // first line
+        renderer.Clear();
+
         //quits the program when pressing escape.
         if (input.GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
         //soundboard
         if (input.GetKeyDown(SDL_SCANCODE_Q) && !input.GetPrevKeyDown(SDL_SCANCODE_Q)) {
             audio.playSound("bass");
-            std::cout << "Bass played\n";
         }
         if (input.GetKeyDown(SDL_SCANCODE_W) && !input.GetPrevKeyDown(SDL_SCANCODE_W)) { audio.playSound("snare"); }
         if (input.GetKeyDown(SDL_SCANCODE_E) && !input.GetPrevKeyDown(SDL_SCANCODE_E)) { audio.playSound("clap"); }
@@ -92,8 +100,12 @@ int main(int argc, char* argv[]) {
             bacon::vec2 position = input.GetMousePosition();
             if (points.empty()) points.push_back(position);
             else if ((position - points.back()).Length() > 10) points.push_back(position);
-            renderer.SetColor((uint8_t)bacon::random::getRandom(256), bacon::random::getRandom(256), bacon::random::getRandom(256));
             renderer.DrawPoint(input.GetMousePosition().x, input.GetMousePosition().y);
+        }
+        for (int i = 0; i < (int)points.size() - 1; i++) {
+            // set color or random color
+             renderer.SetColor((uint8_t)bacon::random::getRandom(256), bacon::random::getRandom(256), bacon::random::getRandom(256));
+             renderer.DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
         }
 
         model.Draw(renderer, input.GetMousePosition(), time.GetTime(), 10.0f);
@@ -103,12 +115,8 @@ int main(int argc, char* argv[]) {
             points.clear();
         }
 
-        audio.Update();
-        input.Update();
 
-        bacon::vec3 color{ 0,0,0 };
-        renderer.SetColor((float)color.r, color.g, color.b);
-        renderer.Clear();
+        //final line
         renderer.Present();
     }
     audio.Kill();
