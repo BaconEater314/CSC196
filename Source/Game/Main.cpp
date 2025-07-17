@@ -8,8 +8,13 @@
 #include "Math/Vector3.h"
 #include "Renderer/Model.h"
 #include "Game/Actor.h"
+#include "Game/Scene.h"
+
+#include "Game/Player.h"
 
 #include <vector>
+#include <memory>
+
 
 int main(int argc, char* argv[]) {
     
@@ -20,17 +25,17 @@ int main(int argc, char* argv[]) {
     bacon::Time time;
 
     //Initialize Renderer
-    bacon::Renderer renderer;
-    renderer.Initialize();
-    renderer.CreateWindow("Bacon Engine", 1280, 1024);
+    std::unique_ptr<bacon::Renderer> renderer = std::make_unique<bacon::Renderer>();
+    renderer->Initialize();
+    renderer->CreateWindow("Bacon Engine", 1280, 1024);
 
-    //Initialize Input Ssytem
-    bacon::InputSystem input;
-    input.Initialize();
+    //Initialize Input System
+    std::unique_ptr<bacon::InputSystem> input = std::make_unique<bacon::InputSystem>();
+    input->Initialize();
 
     // create audio system
-    bacon::AudioSystem audio;
-    audio.Initialize();
+    std::unique_ptr<bacon::AudioSystem> audio = std::make_unique<bacon::AudioSystem>();
+    audio->Initialize();
 
     SDL_Event e;
     bool quit = false;
@@ -47,13 +52,13 @@ int main(int argc, char* argv[]) {
     SDL_FRect greenSquare{ 270, 190, 200, 200 };
 
     // sound work
-    audio.addSound("drums/bass.wav", "bass");
-    audio.addSound("drums/snare.wav", "snare");
-    audio.addSound("drums/clap.wav", "clap");
-    audio.addSound("drums/cowbell.wav", "cowbell");
-    audio.addSound("pipe.wav", "pipe");
-    audio.addSound("fart.wav", "fart");
-    audio.addSound("yippee.wav", "yippee");
+    audio->addSound("drums/bass.wav", "bass");
+    audio->addSound("drums/snare.wav", "snare");
+    audio->addSound("drums/clap.wav", "clap");
+    audio->addSound("drums/cowbell.wav", "cowbell");
+    audio->addSound("pipe.wav", "pipe");
+    audio->addSound("fart.wav", "fart");
+    audio->addSound("yippee.wav", "yippee");
 
     // drawing work
     std::vector<bacon::vec2> points {
@@ -64,13 +69,15 @@ int main(int argc, char* argv[]) {
         {-5, -5},
     };
 
-    bacon::Model* model = new bacon::Model{ points, {0,0,1} };
+    std::shared_ptr<bacon::Model> model = std::make_shared<bacon::Model> (points, bacon::vec3{ 0,0,1 });
+    //bacon::Model* model = new bacon::Model{ points, {0,0,1} };
 
-    std::vector <bacon::Actor> actors;
+    std::vector<std::unique_ptr<bacon::Actor>> actors;
     for (int i = 0; i < 10; i++) {
         bacon::Transform transform{ bacon::vec2{640,512},0,20 };
-        bacon::Actor actor{ transform, model };
-        actors.push_back(actor);
+        std::unique_ptr<Player> player = std::make_unique<Player>(transform, model);
+        Player player{ transform, model };
+        actors.push_back(std::move(player));
     }
 
     // Main loop
@@ -85,13 +92,13 @@ int main(int argc, char* argv[]) {
         }
 
         bacon::vec3 color{ 0,0,0 };
-        renderer.SetColor((float)color.r, color.g, color.b);
+        renderer->SetColor((float)color.r, color.g, color.b);
 
-        audio.Update();
-        input.Update();
+        audio->Update();
+        input->Update();
 
         // all control code after this line
-        renderer.Clear();
+        renderer->Clear();
 
 
         // movement and rotation code
@@ -100,64 +107,69 @@ int main(int argc, char* argv[]) {
         //if (input.GetKeyDown(SDL_SCANCODE_A)) transform.rotation -= bacon::math::degToRad(90 * time.GetDeltaTime());
         //if (input.GetKeyDown(SDL_SCANCODE_D)) transform.rotation += bacon::math::degToRad(90 * time.GetDeltaTime());
         bacon::vec2 direction{ 0,0 };
-        if (input.GetKeyDown(SDL_SCANCODE_W)) direction.y = -1; //playerSpeed * time.GetDeltaTime();
-        if (input.GetKeyDown(SDL_SCANCODE_S)) direction.y = 1; // playerSpeed* time.GetDeltaTime();
-        if (input.GetKeyDown(SDL_SCANCODE_A)) direction.x = -1; // playerSpeed* time.GetDeltaTime();
-        if (input.GetKeyDown(SDL_SCANCODE_D)) direction.x = 1; // playerSpeed* time.GetDeltaTime();
+        if (input->GetKeyDown(SDL_SCANCODE_W)) direction.y = -1; //playerSpeed * time.GetDeltaTime();
+        if (input->GetKeyDown(SDL_SCANCODE_S)) direction.y = 1; // playerSpeed* time.GetDeltaTime();
+        if (input->GetKeyDown(SDL_SCANCODE_A)) direction.x = -1; // playerSpeed* time.GetDeltaTime();
+        if (input->GetKeyDown(SDL_SCANCODE_D)) direction.x = 1; // playerSpeed* time.GetDeltaTime();
 
         if (direction.LengthSqr() > 0) {
-            for (auto actor : actors) {
+            for (auto& actor : actors) {
                 direction = direction.Normalized();
-                actor.getTransform().position += (direction * playerSpeed) * time.GetDeltaTime();
+                actor->getTransform().position += (direction * playerSpeed) * time.GetDeltaTime();
             }
         }
 
         //drawing shapes
         //actor.Draw(renderer);
-        for (auto actor : actors) {
-            actor.Draw(renderer);
+        for (auto& actor : actors) {
+            actor->Draw(*renderer);
         }
 
 
         //quits the program when pressing escape.
-        if (input.GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
+        if (input->GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
         //soundboard
-        if (input.GetKeyDown(SDL_SCANCODE_Q) && !input.GetPrevKeyDown(SDL_SCANCODE_Q)) {
-            audio.playSound("bass");
+        if (input->GetKeyDown(SDL_SCANCODE_Q) && !input->GetPrevKeyDown(SDL_SCANCODE_Q)) {
+            audio->playSound("bass");
         }
-        if (input.GetKeyDown(SDL_SCANCODE_W) && !input.GetPrevKeyDown(SDL_SCANCODE_W)) { audio.playSound("snare"); }
-        if (input.GetKeyDown(SDL_SCANCODE_E) && !input.GetPrevKeyDown(SDL_SCANCODE_E)) { audio.playSound("clap"); }
-        if (input.GetKeyDown(SDL_SCANCODE_R) && !input.GetPrevKeyDown(SDL_SCANCODE_R)) { audio.playSound("cowbell"); }
-        if (input.GetKeyDown(SDL_SCANCODE_P) && !input.GetPrevKeyDown(SDL_SCANCODE_P)) { audio.playSound("pipe"); }
-        if (input.GetKeyDown(SDL_SCANCODE_F) && !input.GetPrevKeyDown(SDL_SCANCODE_F)) { audio.playSound("fart"); }
-        if (input.GetKeyDown(SDL_SCANCODE_Y) && !input.GetPrevKeyDown(SDL_SCANCODE_Y)) { audio.playSound("yippee"); }
+        if (input->GetKeyDown(SDL_SCANCODE_W) && !input->GetPrevKeyDown(SDL_SCANCODE_W)) { audio->playSound("snare"); }
+        if (input->GetKeyDown(SDL_SCANCODE_E) && !input->GetPrevKeyDown(SDL_SCANCODE_E)) { audio->playSound("clap"); }
+        if (input->GetKeyDown(SDL_SCANCODE_R) && !input->GetPrevKeyDown(SDL_SCANCODE_R)) { audio->playSound("cowbell"); }
+        if (input->GetKeyDown(SDL_SCANCODE_P) && !input->GetPrevKeyDown(SDL_SCANCODE_P)) { audio->playSound("pipe"); }
+        if (input->GetKeyDown(SDL_SCANCODE_F) && !input->GetPrevKeyDown(SDL_SCANCODE_F)) { audio->playSound("fart"); }
+        if (input->GetKeyDown(SDL_SCANCODE_Y) && !input->GetPrevKeyDown(SDL_SCANCODE_Y)) { audio->playSound("yippee"); }
 
         // drawing with mouse
-        if (input.GetMouseButtonDown((uint8_t)bacon::InputSystem::MouseButton::Left)) {
-            bacon::vec2 position = input.GetMousePosition();
+        if (input->GetMouseButtonDown((uint8_t)bacon::InputSystem::MouseButton::Left)) {
+            bacon::vec2 position = input->GetMousePosition();
             if (points.empty()) points.push_back(position);
             else if ((position - points.back()).Length() > 10) points.push_back(position);
-            renderer.DrawPoint(input.GetMousePosition().x, input.GetMousePosition().y);
+            renderer->DrawPoint(input->GetMousePosition().x, input->GetMousePosition().y);
         }
         for (int i = 0; i < (int)points.size() - 1; i++) {
             // set color or random color
-             renderer.SetColor((uint8_t)bacon::random::getRandom(256), bacon::random::getRandom(256), bacon::random::getRandom(256));
-             renderer.DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
+             renderer->SetColor((uint8_t)bacon::random::getRandom(256), bacon::random::getRandom(256), bacon::random::getRandom(256));
+             renderer->DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
         }
 
         //model.Draw(renderer, input.GetMousePosition(), time.GetTime(), 10.0f);
 
         //clears the screen
-        if (input.GetKeyDown(SDL_SCANCODE_C) && !input.GetPrevKeyDown(SDL_SCANCODE_C)) {
+        if (input->GetKeyDown(SDL_SCANCODE_C) && !input->GetPrevKeyDown(SDL_SCANCODE_C)) {
             points.clear();
         }
 
 
         // all control code before this spot
-        renderer.Present();
+        renderer->Present();
     }
-    audio.Kill();
-    renderer.Clear();
+
+    renderer->Clear();
     
+    audio->Kill();
+    renderer->Kill();
+    input->Kill();
+
+    return 0;
 }

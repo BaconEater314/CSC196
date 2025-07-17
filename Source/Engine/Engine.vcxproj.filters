@@ -91,5 +91,8 @@
     <ClInclude Include="Game\Actor.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
