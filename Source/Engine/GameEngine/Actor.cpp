@@ -2,7 +2,7 @@
 #include "../Renderer/Model.h"
 
 void bacon::Actor::Update(float dt) {
-
+	m_transform.position += velocity * dt;
 }
 
 void bacon::Actor::Draw(Renderer& renderer) {

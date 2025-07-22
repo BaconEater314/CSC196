@@ -17,6 +17,8 @@ namespace bacon {
     }
 
     bool Renderer::CreateWindow(const std::string& name, int width, int height) {
+        m_width = width;
+        m_height = height;
 
         m_window = SDL_CreateWindow(name.c_str(), width, height, 0);
         if (m_window == nullptr) {

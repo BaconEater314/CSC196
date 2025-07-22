@@ -11,4 +11,5 @@ public:
 	void Draw() override;
 
 protected:
+	Scene m_scene;
 };

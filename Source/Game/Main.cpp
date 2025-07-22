@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
 
     // Main loop
     // This is where all the code that runs the code goes.
-    while (!quit) {
+    /*while (!quit) {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_EVENT_QUIT) {
                 quit = true;
@@ -123,7 +123,7 @@ int main(int argc, char* argv[]) {
 
         // all control code before this spot
         GetEngine().GetRenderer().Present();
-    }
+    }*/
 
     GetEngine().GetRenderer().Clear();
     
