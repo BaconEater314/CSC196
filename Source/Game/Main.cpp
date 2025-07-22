@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
     GetEngine().Initialize();
 
     //initialize scene
-    //bacon::Scene scene;
+    bacon::Scene scene;
 
     //initialize game
     std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
 
     // Main loop
     // This is where all the code that runs the code goes.
-    /*while (!quit) {
+    while (!quit) {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_EVENT_QUIT) {
                 quit = true;
@@ -80,10 +80,7 @@ int main(int argc, char* argv[]) {
         
 
         //drawing shapes
-        //actor.Draw(renderer);
-        for (auto& actor : actors) {
-            actor->Draw(GetEngine().GetRenderer());
-        }
+        scene.Draw(GetEngine().GetRenderer());
 
 
         //quits the program when pressing escape.
@@ -101,7 +98,7 @@ int main(int argc, char* argv[]) {
         if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_Y) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_Y)) { GetEngine().GetAudio().playSound("yippee"); }
 
         // drawing with mouse
-        if (GetEngine().GetInput().GetMouseButtonDown((uint8_t)InputSystem::MouseButton::Left)) {
+        /*if (GetEngine().GetInput().GetMouseButtonDown((uint8_t)InputSystem::MouseButton::Left)) {
             vec2 position = GetEngine().GetInput().GetMousePosition();
             if (points.empty()) points.push_back(position);
             else if ((position - points.back()).Length() > 10) points.push_back(position);
@@ -118,12 +115,12 @@ int main(int argc, char* argv[]) {
         //clears the screen
         if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_C) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_C)) {
             points.clear();
-        }
+        }*/
 
 
         // all control code before this spot
         GetEngine().GetRenderer().Present();
-    }*/
+    }
 
     GetEngine().GetRenderer().Clear();
     

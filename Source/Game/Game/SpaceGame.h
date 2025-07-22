@@ -10,6 +10,6 @@ public:
 	void Update() override;
 	void Draw() override;
 
-protected:
+public:
 	Scene m_scene;
 };

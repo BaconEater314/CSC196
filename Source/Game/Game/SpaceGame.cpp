@@ -5,13 +5,14 @@
 #include "Core/Random.h"
 #include "Renderer/Renderer.h"
 #include "Engine.h"
+#include "Player.h"
 
 #include <vector>
 
 using namespace bacon;
 
 bool SpaceGame::Initialize() {
-	m_scene = std::make_unique<bacon::Scene>();
+    std::unique_ptr<Scene> m_scene = std::make_unique<bacon::Scene>();
 
     
     /*Color Vector(R, G, B) {
@@ -37,7 +38,7 @@ bool SpaceGame::Initialize() {
     
     Transform transform{vec2{bacon::GetEngine().GetRenderer().GetWidth() * 0.5f,GetEngine().GetRenderer().GetHeight() * 0.5f},0,20};
     std::unique_ptr<Player> player = std::make_unique<Player>(transform, model);
-    m_scene->AddActor(stdd : move(player));
+    m_scene->AddActor(std::move(player));
 
 }
 
