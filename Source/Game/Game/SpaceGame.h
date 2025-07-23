@@ -1,5 +1,6 @@
 #pragma once
 #include "GameEngine/Game.h"
+#include "GameEngine/Scene.h"
 
 class SpaceGame : bacon::Game {
 public:
@@ -10,6 +11,5 @@ public:
 	void Update() override;
 	void Draw() override;
 
-public:
-	Scene m_scene;
+private:
 };

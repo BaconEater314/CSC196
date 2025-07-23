@@ -1,10 +1,13 @@
 #include "Actor.h"
 #include "../Renderer/Model.h"
 
-void bacon::Actor::Update(float dt) {
-	m_transform.position += velocity * dt;
-}
+namespace bacon{
+	void Actor::Update(float dt) {
+		transform.position += velocity * dt;
+		velocity = velocity * (1.0f / (1.0f + damping * dt));
+	}
 
-void bacon::Actor::Draw(Renderer& renderer) {
-	m_model->Draw(renderer, m_transform);
+	void Actor::Draw(Renderer& renderer) {
+		m_model->Draw(renderer, transform);
+	}
 }

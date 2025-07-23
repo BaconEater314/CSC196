@@ -98,8 +98,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>sdl3.lib
-fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Source\ThirdParty\SDL3\lib\$(PlatformTarget);$(SolutionDir)Source\ThirdParty\fmod\core\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -117,8 +116,7 @@ fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>sdl3.lib
-fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Source\ThirdParty\SDL3\lib\$(PlatformTarget);$(SolutionDir)Source\ThirdParty\fmod\core\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -134,8 +132,7 @@ fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>sdl3.lib
-fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Source\ThirdParty\SDL3\lib\$(PlatformTarget);$(SolutionDir)Source\ThirdParty\fmod\core\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -153,8 +150,7 @@ fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>sdl3.lib
-fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Source\ThirdParty\SDL3\lib\$(PlatformTarget);$(SolutionDir)Source\ThirdParty\fmod\core\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>

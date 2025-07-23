@@ -10,5 +10,9 @@ public:
 
 	void Update(float dt) override;
 
+public:
+	float speed;
+	float rotationRate;
+
 private:
 };

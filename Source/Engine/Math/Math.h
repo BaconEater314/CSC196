@@ -9,13 +9,30 @@ namespace bacon::math {
 	constexpr float halfPi = pi / 2;
 
 	//converts an angle from radians to degrees or vice versa
-	constexpr float RadToDeg(float rad) { return rad * (180 / pi); }
+	constexpr float radToDeg(float rad) { return rad * (180 / pi); }
 	constexpr float degToRad(float deg) { return deg * (pi / 180); }
 
 	/*template <typename T>
 	T min(T a, T b) {
 		return std::min(a,b)//(a < b) ? a : b;
 	}*/
+
+	constexpr int wrap(int value, int min, int max) {
+		int range = max - min;
+		int result = (value - min) % range;
+		if (result < 0) result += range;
+
+		return min + result;
+	}
+
+	inline float wrap(float value, float min, float max) {
+		float range = max - min;
+		float result = std::fmodf(value - min, range);
+		if (result < 0) result += range;
+
+		return min + result;
+	}
+
 	using std::min;
 	using std::max;
 	using std::clamp;
