@@ -32,9 +32,6 @@
     <ClCompile Include="Engine.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\Renderer.cpp">
-      <Filter>Source\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Time.cpp">
       <Filter>Source\Core</Filter>
     </ClCompile>
@@ -55,6 +52,15 @@
     </ClCompile>
     <ClCompile Include="GameEngine\Game.cpp">
       <Filter>Source\GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Font.cpp">
+      <Filter>Source\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Renderer.cpp">
+      <Filter>Source\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Text.cpp">
+      <Filter>Source\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,13 +100,19 @@
     <ClInclude Include="GameEngine\Actor.h">
       <Filter>Source\GameEngine</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngine\Scene.h">
-      <Filter>Source\GameEngine</Filter>
-    </ClInclude>
     <ClInclude Include="Engine.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="GameEngine\Game.h">
+      <Filter>Source\GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Font.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Text.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine\Scene.h">
       <Filter>Source\GameEngine</Filter>
     </ClInclude>
   </ItemGroup>

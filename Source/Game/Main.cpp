@@ -11,6 +11,8 @@
 #include "GameEngine/Actor.h"
 #include "Engine.h"
 #include "Game/SpaceGame.h"
+#include "Renderer/Font.h"
+#include "Renderer/Text.h"
 
 #include "Game/Player.h"
 
@@ -30,6 +32,12 @@ int main(int argc, char* argv[]) {
     //initialize game
     std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
     game->Initialize();
+
+    Font* font = new Font();
+    font->Load("Axel Gilby Comic Sans.ttf", 20);
+
+    Text* text = new Text(font);
+    text->Create(GetEngine().GetRenderer(), "Hello World", vec3{1, 1, 1});
 
     SDL_Event e;
     bool quit = false;
@@ -83,6 +91,7 @@ int main(int argc, char* argv[]) {
 
         //drawing shapes
         scene.Draw(GetEngine().GetRenderer());
+        text->Draw(GetEngine().GetRenderer(), 40.0f, 40.0f);
 
 
         //quits the program when pressing escape.

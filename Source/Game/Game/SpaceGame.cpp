@@ -17,17 +17,27 @@ bool SpaceGame::Initialize() {
     m_scene = std::make_unique<Scene>();
 
     std::vector<vec2> points{
-        { -1, -2 },
-        { 1, -2 },
-        { 1, -4 },
-        { 3, 0 },
+        { -2, -1 },
+        { -4, -1 },
+        { -4, -2 },
+        { -2, -2 },
+        { -2, 1 },
+        { -4, 1 },
+        { -4, 2 },
+        { -2, 2 },
+        { -2, 1 },
+        { -1, 1 },
+        { 0, 1 },
+        { 1, 2 },
         { 3, 2 },
-        { 1, 3 },
-        { -1, 3 },
-        { -3, 2 },
-        { -3, 0 },
-        { -1, -4 },
-        { -1, -2 },
+        { 4, 1 },
+        { 4, -1 },
+        { 3, -2 },
+        { 1, -2 },
+        { 0, -1 },
+        { 0, 1 },
+        { 0, -1 },
+        { -2, -1 },
     };
 
     //create player
@@ -42,8 +52,17 @@ bool SpaceGame::Initialize() {
 
     m_scene->AddActor(std::move(player));
 
+    std::vector<vec2> enemyPoints{
+        { 3, 0 },
+        { -3, -2 },
+        { -1, 0 },
+        { -3, 2 },
+        { 3, 0 },
+    };
+
+
     //create enemies
-    std::shared_ptr<Model> enemyModel = std::make_shared<Model>(points, vec3{ 1,1,0 });
+    std::shared_ptr<Model> enemyModel = std::make_shared<Model>(enemyPoints, vec3{ 1,1,0 });
     for (int i = 0; i < 10; i++) {
         Transform transform{vec2{random::GetRandomFloat() * bacon::GetEngine().GetRenderer().GetWidth(), random::GetRandomFloat() * GetEngine().GetRenderer().GetHeight() * 0.5f},0,20};
         std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, enemyModel);

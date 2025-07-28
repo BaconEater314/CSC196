@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL3/SDL.h>
 #include <iostream>
+#include <SDL3_ttf/SDL_ttf.h>
 
 namespace bacon {
     class Renderer {
@@ -24,6 +25,7 @@ namespace bacon {
         int GetHeight() const { return m_height; }
 
     private:
+        friend class Text; 
         SDL_Window* m_window{ nullptr };
         SDL_Renderer* m_renderer{ nullptr };
 
