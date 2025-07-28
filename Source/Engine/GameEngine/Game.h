@@ -12,6 +12,10 @@ namespace bacon {
 		virtual void Update() = 0;
 		virtual void Draw() = 0;
 
+	protected:
+		int m_score;
+		int m_lives;
+
 	public:
 		std::unique_ptr<class Scene> m_scene;
 	};

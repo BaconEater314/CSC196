@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
     game->Initialize();
 
     Font* font = new Font();
-    font->Load("Axel Gilby Comic Sans.ttf", 20);
+    font->Load("Surprise Valentine.ttf", 30);
 
     Text* text = new Text(font);
     text->Create(GetEngine().GetRenderer(), "Hello World", vec3{1, 1, 1});
@@ -98,12 +98,10 @@ int main(int argc, char* argv[]) {
         if (GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
         //soundboard
-        if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_Q) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_Q)) {
-            GetEngine().GetAudio().PlaySound("bass");
-        }
+        //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_Q) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_Q)) { GetEngine().GetAudio().PlaySound("bass");}
         //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_W)) { GetEngine().GetAudio().playSound("snare"); }
-        if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_E) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_E)) { GetEngine().GetAudio().PlaySound("clap"); }
-        if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_R) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_R)) { GetEngine().GetAudio().PlaySound("cowbell"); }
+        //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_E) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_E)) { GetEngine().GetAudio().PlaySound("clap"); }
+        //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_R) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_R)) { GetEngine().GetAudio().PlaySound("cowbell"); }
         if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_P) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_P)) { GetEngine().GetAudio().PlaySound("pipe"); }
         if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_F) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_F)) { GetEngine().GetAudio().PlaySound("fart"); }
         if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_Y) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_Y)) { GetEngine().GetAudio().PlaySound("yippee"); }

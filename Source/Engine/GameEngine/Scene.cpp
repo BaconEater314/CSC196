@@ -19,12 +19,8 @@ namespace bacon {
 		actor->scene = this;
 		m_actors.push_back(std::move(actor));
 	}
-	Actor* Scene::GetActorByName(const std::string& name){
-		for (auto& actor : m_actors) {
-			if (actor->name == name) {
-				return actor.get();
-			}
-		}
-		return nullptr;
+
+	void Scene::RemoveAllActors(){
+		m_actors.clear();
 	}
 }
