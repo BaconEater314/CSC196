@@ -8,6 +8,28 @@ namespace bacon {
 		for (auto& actor : m_actors) {
 			actor->Update(dt);
 		}
+
+		//remove destroyed actors
+		for (auto iter = m_actors.begin(); iter != m_actors.end();) {
+			if (!(*iter)->alive) {
+				iter = m_actors.erase(iter);
+			} else {
+				iter++;
+			}
+		}
+
+		//check for collision
+		for (auto& actorA : m_actors) {
+			for (auto& actorB : m_actors) {
+				if (actorA == actorB || (!actorA->alive || !actorB->alive)) continue;
+
+				float distance = (actorA->transform.position - actorB->transform.position).Length();
+				if (distance <= actorA->GetRadius() + actorB->GetRadius()) {
+					actorA->OnCollision(actorB.get());
+					actorB->OnCollision(actorA.get());
+				}
+			}
+		}
 	}
 
 	void Scene::Draw(Renderer& renderer) {

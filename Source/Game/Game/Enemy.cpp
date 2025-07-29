@@ -2,6 +2,7 @@
 #include "Engine.h"
 #include "Renderer/Renderer.h"
 #include "GameEngine/Scene.h"
+#include "GameEngine/Game.h"
 
 using namespace bacon;
 
@@ -23,4 +24,11 @@ void Enemy::Update(float dt){
     transform.position.y = math::wrap(transform.position.y, 0.0f, (float)GetEngine().GetRenderer().GetHeight());
 
     Actor::Update(dt);
+}
+
+void Enemy::OnCollision(Actor* other) {
+    if (other->tag != tag) {
+        alive = false;
+        scene->GetGame()->AddPoints(100);
+    }
 }

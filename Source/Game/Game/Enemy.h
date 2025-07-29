@@ -11,5 +11,8 @@ public:
 	void Update(float dt) override;
 
 	float speed = 200;
+
+	void OnCollision(Actor* other) override;
+
 private:
 };

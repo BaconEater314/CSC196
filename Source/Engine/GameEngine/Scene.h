@@ -4,13 +4,15 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <list>
 
 namespace bacon {
 	class Actor;
+	class Game;
 
 	class Scene {
 	public:
-		Scene() = default;
+		Scene(Game* game) : m_game{ game } {}
 
 		void Update(float dt);
 		void Draw(class Renderer& renderer);
@@ -24,8 +26,11 @@ namespace bacon {
 		template<typename T = Actor>
 		std::vector<T*> GetActorsByTag(const std::string& tag);
 
+		class Game* GetGame() { return m_game; }
+
 	private:
-		std::vector<std::unique_ptr<Actor>> m_actors;
+		class Game* m_game{ nullptr };
+		std::list<std::unique_ptr<Actor>> m_actors;
 	};
 
 	template<typename T>

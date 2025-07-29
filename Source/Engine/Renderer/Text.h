@@ -3,6 +3,9 @@
 #include "../Math/Vector3.h"
 #include "Font.h"
 
+#include <string>
+#include <memory>
+
 struct SDL_Texture;
 
 namespace bacon {
@@ -16,7 +19,7 @@ namespace bacon {
 		void Draw(Renderer& renderer, float x, float y);
 
 	private:
-		Font* m_font;
-		SDL_Texture* m_texture;
+		std::shared_ptr<Font> m_font{ nullptr };
+		SDL_Texture* m_texture{ nullptr };
 	};
 }

@@ -6,4 +6,5 @@
 namespace GameData {
     extern std::vector<bacon::vec2> shipPoints;
     extern std::vector<bacon::vec2> enemyPoints;
+    extern std::vector<bacon::vec2> rocketPoints;
 }

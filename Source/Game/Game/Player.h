@@ -10,9 +10,13 @@ public:
 
 	void Update(float dt) override;
 
+	void OnCollision(Actor* other) override;
+
 public:
 	float speed;
 	float rotationRate;
+	float fireRate = 0.2f;
+	float fireTimer = 0.0f;
 
 private:
 };

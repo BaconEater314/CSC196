@@ -14,6 +14,9 @@ namespace bacon {
 		vec2 velocity{ 0, 0 };
 		float damping{ 0.2f };
 
+		bool alive { true };
+		float lifespan { 0 };
+
 		Transform transform;
 		class Scene* scene{ nullptr };
 
@@ -27,7 +30,9 @@ namespace bacon {
 		virtual void Update(float dt);
 		virtual void Draw(class Renderer& renderer);
 
-		Transform& getTransform() { return transform; }
+		virtual void OnCollision(Actor* other) = 0;
+
+		float GetRadius();
 
 	protected:
 		std::shared_ptr<Model> m_model;

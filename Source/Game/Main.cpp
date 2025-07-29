@@ -114,6 +114,8 @@ int main(int argc, char* argv[]) {
 
     GetEngine().GetRenderer().Clear();
     
+    game.release();
+    game->Kill();
     GetEngine().Kill();
 
     return 0;
