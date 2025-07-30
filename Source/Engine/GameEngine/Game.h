@@ -1,4 +1,5 @@
 #pragma once
+#include "../Renderer/Renderer.h"
 
 #include <memory>
 
@@ -10,7 +11,7 @@ namespace bacon {
 		virtual bool Initialize() = 0;
 		virtual void Kill() = 0;
 		virtual void Update() = 0;
-		virtual void Draw() = 0;
+		virtual void Draw(class bacon::Renderer& renderer) = 0;
 
 		void AddPoints(int points) { m_score += points; }
 		int GetPoints() const { return m_score; }

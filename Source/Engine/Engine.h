@@ -7,6 +7,7 @@ namespace bacon {
 	class Renderer;
 	class AudioSystem;
 	class InputSystem;
+	class ParticleSystem
 
 	class Engine {
 	public:
@@ -20,6 +21,7 @@ namespace bacon {
 		Renderer& GetRenderer() { return *m_renderer; }
 		InputSystem& GetInput() { return *m_input; }
 		AudioSystem& GetAudio() { return *m_audio; }
+		ParticleSystem& GetPS() { return *m_particleSystem; }
 		Time& GetTime() { return m_time; }
 
 	private:
@@ -30,6 +32,8 @@ namespace bacon {
 		std::unique_ptr<InputSystem> m_input;
 
 		std::unique_ptr<AudioSystem> m_audio;
+
+		std::unique_ptr<ParticleSystem> m_particleSystem;
 	};
 
 	Engine& GetEngine();

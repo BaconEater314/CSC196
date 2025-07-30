@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     GetEngine().Initialize();
 
     //initialize scene
-    bacon::Scene scene;
+    Scene scene;
 
     //initialize game
     std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
         GetEngine().GetRenderer().SetColor(color.r, color.g, color.b);
         GetEngine().GetRenderer().Clear();
 
-        game->Draw();
+        game->Draw(GetEngine().GetRenderer());
 
         // movement and rotation code
         //float playerSpeed = 200;

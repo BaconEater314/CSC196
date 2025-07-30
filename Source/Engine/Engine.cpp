@@ -2,6 +2,7 @@
 #include "Renderer/Renderer.h"
 #include "Input/InputSystem.h"
 #include "Audio/AudioSystem.h"
+#include "Renderer/ParticleSystem.h"
 
 namespace bacon {
 
@@ -24,6 +25,9 @@ namespace bacon {
 		m_audio = std::make_unique<bacon::AudioSystem>();
 		m_audio->Initialize();
 
+		m_particleSystem = std::make_unique<ParticleSystem>();
+		m_particleSystem->Initialize();
+
 		return true;
 	}
 
@@ -31,12 +35,14 @@ namespace bacon {
 		m_audio->Kill();
 		m_input->Kill();
 		m_renderer->Kill();
+		m_particleSystem->Kill();
 	}
 
 	void Engine::Update() {
 		m_time.Tick();
 		m_input->Update();
 		m_audio->Update();
+		m_particleSystem->Update(m_time.GetDeltaTime());
 	}
 
 	void Engine::Draw(){

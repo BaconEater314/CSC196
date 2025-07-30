@@ -21,12 +21,15 @@ public:
 
 	bool Initialize() override;
 	void Kill() override;
-	void Update() override;
-	void Draw() override;
+	void Update(float dt) override;
+	void Draw(class bacon::Renderer& renderer) override;
+
+	void OnPlayerDeath();
 
 private:
 	GameState m_gameState = GameState::Initialize;
 	float m_enemySpawnTimer{ 0 };
+	float m_stateTimer { 0 };
 
 	std::shared_ptr<class bacon::Font> m_titleFont;
 	std::shared_ptr<class bacon::Font> m_uiFont;

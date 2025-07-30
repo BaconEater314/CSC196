@@ -7,10 +7,21 @@
 #include "GameRocket.h"
 #include "GameEngine/Scene.h"
 #include "Renderer/Model.h"
+#include "SpaceGame.h"
+#include "Renderer/ParticleSystem.h"
+#include "Core/Random.h"
 
 using namespace bacon;
 
 void Player::Update(float dt){
+
+    Particle particle;
+    particle.position = transform.position;
+    //particle.velocity = vec2{ random::GetReal(-200,200),random::GetReal(-200,200) };
+    particle.velocity = vec2{ 200,0 };
+    particle.color = { 1,1,1 };
+    particle.lifespan = 2;
+    GetEngine().GetPS().AddParticle(particle);
 
     float rotate = 0;
     if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) rotate = -1;
@@ -37,7 +48,7 @@ void Player::Update(float dt){
         fireTimer = fireRate;
         std::shared_ptr<Model> model = std::make_shared<Model>(GameData::rocketPoints, vec3{ 1,1,1 });
         Transform transform{ this->transform.position, this->transform.rotation, 2.0f};
-        auto rocket = std::make_unique<Player>(transform, model);
+        auto rocket = std::make_unique<Rocket>(transform, model);
         rocket->speed = 1500.0f;
         rocket->lifespan = 1.5f;
         rocket->name = "rocket";
@@ -52,5 +63,6 @@ void Player::Update(float dt){
 void Player::OnCollision(Actor* other) {
     if (other->tag != tag) {
         alive = false;
+        dynamic_cast<SpaceGame*>(scene->GetGame())->OnPlayerDeath();
     }
 }
