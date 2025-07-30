@@ -19,7 +19,7 @@
 using namespace bacon;
 
 bool SpaceGame::Initialize() {
-    m_scene = std::make_unique<Scene>(this);
+    m_scene = std::make_unique<bacon::Scene>(this);
 
     m_titleFont = std::make_shared<Font>();
     m_titleFont->Load("Surprise Valentine.ttf",128);

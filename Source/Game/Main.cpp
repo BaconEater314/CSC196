@@ -27,17 +27,13 @@ int main(int argc, char* argv[]) {
     GetEngine().Initialize();
 
     //initialize scene
-    Scene scene;
-
+    
     //initialize game
     std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
     game->Initialize();
 
     Font* font = new Font();
     font->Load("Surprise Valentine.ttf", 30);
-
-    Text* text = new Text(font);
-    text->Create(GetEngine().GetRenderer(), "Hello World", vec3{1, 1, 1});
 
     SDL_Event e;
     bool quit = false;
@@ -74,7 +70,7 @@ int main(int argc, char* argv[]) {
         }
 
         GetEngine().Update();
-        game->Update();
+        game->Update(GetEngine().GetTime().GetDeltaTime());
         //scene.Update(GetEngine().GetTime().GetTime());
 
         vec3 color{ 0,0,0 };
@@ -90,8 +86,8 @@ int main(int argc, char* argv[]) {
         
 
         //drawing shapes
-        scene.Draw(GetEngine().GetRenderer());
-        text->Draw(GetEngine().GetRenderer(), 40.0f, 40.0f);
+        
+        //text->Draw(GetEngine().GetRenderer(), 40.0f, 40.0f);
 
 
         //quits the program when pressing escape.

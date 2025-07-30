@@ -26,10 +26,10 @@ namespace bacon {
 		template<typename T = Actor>
 		std::vector<T*> GetActorsByTag(const std::string& tag);
 
-		class Game* GetGame() { return m_game; }
+		Game* GetGame() { return m_game; }
 
 	private:
-		class Game* m_game{ nullptr };
+		Game* m_game{ nullptr };
 		std::list<std::unique_ptr<Actor>> m_actors;
 	};
 

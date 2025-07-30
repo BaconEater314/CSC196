@@ -7,7 +7,7 @@ namespace bacon {
 	class Renderer;
 	class AudioSystem;
 	class InputSystem;
-	class ParticleSystem
+	class ParticleSystem;
 
 	class Engine {
 	public:

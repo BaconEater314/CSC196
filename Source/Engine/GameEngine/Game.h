@@ -10,7 +10,7 @@ namespace bacon {
 
 		virtual bool Initialize() = 0;
 		virtual void Kill() = 0;
-		virtual void Update() = 0;
+		virtual void Update(float dt) = 0;
 		virtual void Draw(class bacon::Renderer& renderer) = 0;
 
 		void AddPoints(int points) { m_score += points; }
@@ -20,8 +20,8 @@ namespace bacon {
 		int GetLive() const { return m_lives; }
 
 	protected:
-		int m_score;
-		int m_lives;
+		int m_score{ 0 };
+		int m_lives{ 0 } ;
 
 	public:
 		std::unique_ptr<class Scene> m_scene;

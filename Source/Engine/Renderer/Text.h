@@ -12,7 +12,7 @@ namespace bacon {
 	class Text {
 	public:
 		Text() = default;
-		Text(Font* font) : m_font{ font } {}
+		Text(std::shared_ptr<Font> font) : m_font{ font } {}
 		~Text();
 
 		bool Create(Renderer& renderer, const std::string& text, const vec3& color);

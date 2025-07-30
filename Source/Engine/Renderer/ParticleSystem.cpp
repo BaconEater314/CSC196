@@ -36,7 +36,7 @@ namespace bacon {
 		Particle* part = GetFreeParticle();
 		if (part != nullptr) {
 			*part = particle;
-			part = true;
+			part->active = true;
 		}
 	}
 	
