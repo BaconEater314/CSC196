@@ -4,7 +4,7 @@
 namespace bacon {
 	bool ParticleSystem::Initialize() {
 		//reserving space for particles
-		m_particles.resize(1000);
+		m_particles.resize(10000);
 
 		return true;
 	}

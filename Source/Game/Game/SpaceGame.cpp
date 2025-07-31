@@ -51,6 +51,8 @@ void SpaceGame::Update(float dt){
         dreadAlive = false;
         playGameOver = true;
         m_songTimer = 0;
+        
+        
         m_gameState = GameState::StartRound;
         break;
     case SpaceGame::GameState::StartRound:
@@ -68,6 +70,7 @@ void SpaceGame::Update(float dt){
         player->damping = 1.5f;
         player->name = "player";
         player->tag = "player";
+        player->health = 3;
 
         m_scene->AddActor(std::move(player));
         m_gameState = GameState::Game;
@@ -85,6 +88,12 @@ void SpaceGame::Update(float dt){
         if (m_score % 1000 == 0 && m_score > 0 && !dreadAlive) {
             dreadAlive = true;
             SpawnDreadnought();
+        }
+        if (m_score > 5000) {
+            if (m_score % 500 == 0 && !dreadAlive) {
+                dreadAlive = true;
+                SpawnDreadnought();
+            }
         }
         if (m_scene->GetActorByName("dread") == nullptr) dreadAlive = false;
 
@@ -133,7 +142,7 @@ void SpaceGame::Update(float dt){
 void SpaceGame::Draw(class Renderer& renderer){
     if (m_gameState == GameState::Title) {
         m_titleText->Create(renderer, "BACON GAME", vec3{ 1,0,0 });
-        m_titleText->Draw(renderer, 600, 600);
+        m_titleText->Draw(renderer, 400, 600);
     }
     if (m_gameState == GameState::GameOver) {
         m_titleText->Create(renderer, "GAME OVER", vec3{ 1,0,0 });

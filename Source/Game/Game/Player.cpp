@@ -16,13 +16,6 @@ using namespace bacon;
 
 void Player::Update(float dt){
 
-    Particle particle;
-    particle.position = transform.position-10;
-    particle.velocity = vec2{ random::getReal(-200.0f,200.0f),random::getReal(-200.0f,200.0f) };
-    particle.color = { 1,1,1 };
-    particle.lifespan = 2;
-    GetEngine().GetPS().AddParticle(particle);
-
     float rotate = 0;
     if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) rotate = -1;
     if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_D)) rotate = 1;
@@ -31,8 +24,24 @@ void Player::Update(float dt){
     
     //thrust
     float thrust = 0;
-    if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W)) thrust = 1;
-    if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_S)) thrust = -1;
+    if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W)) {
+        thrust = 1;
+        Particle particle;
+        particle.position = transform.position - 10;
+        particle.velocity = vec2{ random::getReal(-200.0f,200.0f),random::getReal(-200.0f,200.0f) };
+        particle.color = { 1,1,1 };
+        particle.lifespan = 2;
+        GetEngine().GetPS().AddParticle(particle);
+    }
+    if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_S)) { 
+        thrust = -1; 
+        Particle particle;
+        particle.position = transform.position - 10;
+        particle.velocity = vec2{ random::getReal(-200.0f,200.0f),random::getReal(-200.0f,200.0f) };
+        particle.color = { 1,1,1 };
+        particle.lifespan = 2;
+        GetEngine().GetPS().AddParticle(particle);
+    }
 
     vec2 direction{ 1,0 };
     vec2 force = direction.Rotate(math::degToRad(transform.rotation)) * thrust * speed;

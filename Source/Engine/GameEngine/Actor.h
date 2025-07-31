@@ -20,6 +20,8 @@ namespace bacon {
 		Transform transform;
 		class Scene* scene{ nullptr };
 
+		float health;
+
 	public:
 		Actor() = default;
 		Actor(Transform transform, std::shared_ptr<class Model> model) :
