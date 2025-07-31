@@ -10,15 +10,15 @@
 #include "SpaceGame.h"
 #include "Renderer/ParticleSystem.h"
 #include "Core/Random.h"
+#include "Audio/AudioSystem.h"
 
 using namespace bacon;
 
 void Player::Update(float dt){
 
     Particle particle;
-    particle.position = transform.position;
+    particle.position = transform.position-10;
     particle.velocity = vec2{ random::getReal(-200.0f,200.0f),random::getReal(-200.0f,200.0f) };
-    //particle.velocity = vec2{ 200,0 };
     particle.color = { 1,1,1 };
     particle.lifespan = 2;
     GetEngine().GetPS().AddParticle(particle);
@@ -53,6 +53,8 @@ void Player::Update(float dt){
         rocket->lifespan = 1.5f;
         rocket->name = "rocket";
         rocket->tag = "player";
+
+        GetEngine().GetAudio().PlaySound("pew");
 
         scene->AddActor(std::move(rocket));
     }

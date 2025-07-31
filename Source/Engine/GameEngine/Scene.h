@@ -32,7 +32,7 @@ namespace bacon {
 		Game* m_game{ nullptr };
 		std::list<std::unique_ptr<Actor>> m_actors;
 	};
-
+	
 	template<typename T>
 	inline T* Scene::GetActorByName(const std::string& name){
 		std::vector<T*> results;

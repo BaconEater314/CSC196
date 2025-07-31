@@ -50,7 +50,7 @@ namespace GameData {
         { 1, -1 },
     };
 
-    std::vector<bacon::vec2> dreadnaughtPoints{
+    std::vector<bacon::vec2> dreadnoughtPoints{
         { -8, -2 },
         { -6, -4 },
         { -3, -4 },
@@ -91,5 +91,10 @@ namespace GameData {
         { 2, -6 },
         { 2, 6 },
         { -1, 2 },
+    };
+
+    std::vector<bacon::vec2> laserPoints{
+        { 0, 0 },
+        { -10, 0 },
     };
 }

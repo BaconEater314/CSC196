@@ -17,7 +17,7 @@ namespace bacon {
 		for (auto& particle : m_particles) {
 			if (particle.active) {
 				particle.lifespan -= dt;
-				particle.lifespan = (particle.lifespan > 0);
+				particle.active = (particle.lifespan > 0);
 				particle.position += particle.velocity * dt;
 			}
 		}

@@ -56,9 +56,14 @@ int main(int argc, char* argv[]) {
     GetEngine().GetAudio().AddSound("Assets/drums/snare.wav", "snare");
     GetEngine().GetAudio().AddSound("Assets/drums/clap.wav", "clap");
     GetEngine().GetAudio().AddSound("Assets/drums/cowbell.wav", "cowbell");
-    GetEngine().GetAudio().AddSound("Assets/pipe.wav", "pipe");
-    GetEngine().GetAudio().AddSound("Assets/fart.wav", "fart");
-    GetEngine().GetAudio().AddSound("Assets/yippee.wav", "yippee");
+    GetEngine().GetAudio().AddSound("Assets/Sounds/pipe.wav", "pipe");
+    GetEngine().GetAudio().AddSound("Assets/Sounds/fart.wav", "fart");
+    GetEngine().GetAudio().AddSound("Assets/Sounds/yippee.wav", "yippee");
+    GetEngine().GetAudio().AddSound("Assets/Sounds/impact2.wav", "other_impact");
+    GetEngine().GetAudio().AddSound("Assets/Sounds/pew.wav", "pew");
+    GetEngine().GetAudio().AddSound("Assets/Sounds/impact.wav", "impact");
+    GetEngine().GetAudio().AddSound("Assets/Sounds/game_over.wav", "game_over");
+    GetEngine().GetAudio().AddSound("Assets/Sounds/laser.wav", "laser");
     
 
     // Main loop
@@ -99,7 +104,7 @@ int main(int argc, char* argv[]) {
         //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_Q) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_Q)) { GetEngine().GetAudio().PlaySound("bass");}
         //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_W)) { GetEngine().GetAudio().playSound("snare"); }
         //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_E) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_E)) { GetEngine().GetAudio().PlaySound("clap"); }
-        //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_R) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_R)) { GetEngine().GetAudio().PlaySound("cowbell"); }
+        //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_SPACE) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_SPACE)) { GetEngine().GetAudio().PlaySound("pew"); }
         if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_P) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_P)) { GetEngine().GetAudio().PlaySound("pipe"); }
         if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_F) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_F)) { GetEngine().GetAudio().PlaySound("fart"); }
         if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_Y) && !GetEngine().GetInput().GetPrevKeyDown(SDL_SCANCODE_Y)) { GetEngine().GetAudio().PlaySound("yippee"); }

@@ -13,6 +13,7 @@
 #include "Core/Time.h"
 #include "GameEngine/Actor.h"
 #include "Renderer/ParticleSystem.h"
+#include "Audio/AudioSystem.h"
 
 #include <vector>
 
@@ -45,16 +46,21 @@ void SpaceGame::Update(float dt){
         }
         break;
     case SpaceGame::GameState::StartGame:
-        m_score = 0;
+        m_score = 1000;
         m_lives = 3;
+        dreadAlive = false;
+        playGameOver = true;
         m_gameState = GameState::StartRound;
         break;
     case SpaceGame::GameState::StartRound:
     {
         m_scene->RemoveAllActors();
+        if (dreadAlive) {
+            SpawnDreadnought();
+        }
         //create player
         std::shared_ptr<Model> model = std::make_shared<Model>(GameData::shipPoints, vec3{ 1,0,0 });
-        Transform transform{ vec2{bacon::GetEngine().GetRenderer().GetWidth() * 0.5f,GetEngine().GetRenderer().GetHeight() * 0.5f},0,20 };
+        Transform transform{ vec2{bacon::GetEngine().GetRenderer().GetWidth() * 0.5f,GetEngine().GetRenderer().GetHeight() * 0.5f},0,10 };
         auto player = std::make_unique<Player>(transform, model);
         player->speed = 750.0f;
         player->rotationRate = 180.0f;
@@ -73,17 +79,13 @@ void SpaceGame::Update(float dt){
         if (m_enemySpawnTimer <= 0) {
             m_enemySpawnTimer = 3;
 
-            //create enemies
-            std::shared_ptr<Model> enemyModel = std::make_shared<Model>(GameData::enemyPoints, vec3{ 1,1,0 });
-            Transform transform{ vec2{random::GetRandomFloat() * bacon::GetEngine().GetRenderer().GetWidth(), random::GetRandomFloat() * GetEngine().GetRenderer().GetHeight() * 0.5f},0,20 };
-            std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, enemyModel);
-            enemy->damping = 1.5f;
-            enemy->fireRate = 3;
-            enemy->fireTimer = 5;
-            enemy->speed = (random::GetRandomFloat() * 300) + 300;
-            enemy->tag = "enemy";
-            m_scene->AddActor(std::move(enemy));
+            SpawnEnemy();
         }
+        if (m_score % 1000 == 0 && m_score > 0 && !dreadAlive) {
+            dreadAlive = true;
+            SpawnDreadnought();
+        }
+        if (m_scene->GetActorByName("dread") == nullptr) dreadAlive = false;
     }
         break;
     case SpaceGame::GameState::PlayerDead:
@@ -101,6 +103,10 @@ void SpaceGame::Update(float dt){
         break;
     case SpaceGame::GameState::GameOver:
         m_stateTimer -= dt;
+        if (playGameOver) {
+            GetEngine().GetAudio().PlaySound("game_over");
+            playGameOver = false;
+        }
         if(m_stateTimer <= 0) m_gameState = GameState::Title;
         break;
     default:
@@ -149,7 +155,7 @@ void SpaceGame::SpawnEnemy(){
         //create enemies
         std::shared_ptr<Model> enemyModel = std::make_shared<Model>(GameData::enemyPoints, vec3{ 1,1,0 });
 
-        vec2 position = player->transform.position + random::onUnitCircle();
+        vec2 position = player->transform.position + random::onUnitCircle() * random::getReal(500.0f, 1000.0f);
         Transform transform{ position, random::getReal(0.0f,360.0f), 10};
 
         
@@ -159,7 +165,38 @@ void SpaceGame::SpawnEnemy(){
         enemy->fireTimer = 5;
         enemy->speed = (random::GetRandomFloat() * 300) + 300;
         enemy->tag = "enemy";
+        enemy->health = 1;
         m_scene->AddActor(std::move(enemy));
+    }
+}
+
+void SpaceGame::SpawnDreadnought() {
+    Player* player = m_scene->GetActorByName<Player>("player");
+    if (player) {
+
+        dreadFire = true;
+
+        //create enemies
+        std::shared_ptr<Model> dreadModel = std::make_shared<Model>(GameData::dreadnoughtPoints, vec3{ 1,0,0 });
+
+        vec2 position = player->transform.position + random::onUnitCircle() * random::getReal(2000.0f, 2500.0f);
+        Transform transform{ position, 0, 10 };
+
+
+        std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, dreadModel);
+        enemy->damping = 1.5f;
+        enemy->fireRate = 0.05;
+        enemy->fireTimer = 3;
+        enemy->health = 5;
+        enemy->speed = (random::GetRandomFloat() * 50) + 200;
+        enemy->name = "dread";
+        enemy->tag = "enemy";
+        m_scene->AddActor(std::move(enemy));
+
+        if (dreadFire) {
+            dreadFire = false;
+            //GetEngine().GetAudio().PlaySound("laser");
+        }
     }
 }
 

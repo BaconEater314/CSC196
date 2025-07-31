@@ -13,6 +13,7 @@ public:
 	float speed = 200;
 	float fireTimer = 3;
 	float fireRate = 1;
+	float health;
 
 	void OnCollision(Actor* other) override;
 

@@ -27,6 +27,10 @@ public:
 	void OnPlayerDeath();
 
 	void SpawnEnemy();
+	void SpawnDreadnought();
+
+	bool playGameOver = true;
+	bool dreadFire = false;
 
 private:
 	GameState m_gameState = GameState::Initialize;
@@ -39,4 +43,6 @@ private:
 	std::unique_ptr<class bacon::Text> m_titleText;
 	std::unique_ptr<class bacon::Text> m_scoreText;
 	std::unique_ptr<class bacon::Text> m_livesText;
+
+	bool dreadAlive = false;
 };

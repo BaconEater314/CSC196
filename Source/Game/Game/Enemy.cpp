@@ -10,6 +10,7 @@
 #include "Renderer/ParticleSystem.h"
 #include "Core/Random.h"
 #include "Math/Vector2.h"
+#include "Audio/AudioSystem.h"
 
 using namespace bacon;
 
@@ -63,8 +64,22 @@ void Enemy::Update(float dt){
 
 void Enemy::OnCollision(Actor* other) {
     if (other->tag != tag) {
-        dead = true;
-        scene->GetGame()->AddPoints(100);
+        int rand = random::getInt(0, 2);
+        if (rand == 1) {
+            GetEngine().GetAudio().PlaySound("impact");
+        } else {
+            GetEngine().GetAudio().PlaySound("other_impact");
+        }
+        health -= 1;
+        if (health <= 0) {
+            dead = true;
+            if (scene->GetActorByName("dread")) {
+                scene->GetGame()->AddPoints(300);
+            }
+            else {
+                scene->GetGame()->AddPoints(100);
+            }
+        }
         for (int i = 0; i < 100; i++) {
             Particle particle;
             particle.position = transform.position;
