@@ -11,7 +11,7 @@ namespace bacon {
 
 		//remove destroyed actors
 		for (auto iter = m_actors.begin(); iter != m_actors.end();) {
-			if (!(*iter)->alive) {
+			if ((*iter)->dead) {
 				iter = m_actors.erase(iter);
 			} else {
 				iter++;
@@ -21,7 +21,7 @@ namespace bacon {
 		//check for collision
 		for (auto& actorA : m_actors) {
 			for (auto& actorB : m_actors) {
-				if (actorA == actorB || (!actorA->alive || !actorB->alive)) continue;
+				if (actorA == actorB || (actorA->dead || actorB->dead)) continue;
 
 				float distance = (actorA->transform.position - actorB->transform.position).Length();
 				if (distance <= actorA->GetRadius() + actorB->GetRadius()) {

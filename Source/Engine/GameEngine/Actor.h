@@ -14,7 +14,7 @@ namespace bacon {
 		vec2 velocity{ 0, 0 };
 		float damping{ 0.2f };
 
-		bool alive { true };
+		bool dead { false };
 		float lifespan { 0 };
 
 		Transform transform;

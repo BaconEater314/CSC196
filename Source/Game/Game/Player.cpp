@@ -58,11 +58,12 @@ void Player::Update(float dt){
     }
 
     Actor::Update(dt);
+
 }
 
 void Player::OnCollision(Actor* other) {
     if (other->tag != tag) {
-        alive = false;
+        dead = true;
         dynamic_cast<SpaceGame*>(scene->GetGame())->OnPlayerDeath();
     }
 }

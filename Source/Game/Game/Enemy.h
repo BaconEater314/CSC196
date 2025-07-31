@@ -11,8 +11,8 @@ public:
 	void Update(float dt) override;
 
 	float speed = 200;
-	float fireTimer = 0;
-	float fireRate = 0;
+	float fireTimer = 3;
+	float fireRate = 1;
 
 	void OnCollision(Actor* other) override;
 

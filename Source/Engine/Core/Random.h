@@ -69,6 +69,6 @@ namespace bacon::random {
 		vec2 v;
 		v.x = math::cosf(radians);
 		v.y = math::sinf(radians);
-        return v;
+        return {math::cosf(radians), math::sinf(radians)};
 	}
 }

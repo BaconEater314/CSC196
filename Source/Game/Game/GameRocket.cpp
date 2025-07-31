@@ -21,8 +21,8 @@ void Rocket::Update(float dt) {
 
     Particle particle;
     particle.position = transform.position;
-    //particle.velocity = random::onUnitCircle() * random::getReal(20.0f, 120.0f);
-    particle.velocity = velocity;
+    particle.velocity = random::onUnitCircle() * random::getReal(20.0f, 120.0f);
+    //particle.velocity = velocity;
     particle.color = (tag == "enemy") ? vec3{ 0, 1, 1 } : vec3{ 1,1,0 };
     particle.lifespan = random::getReal(0.15f, 0.3f);
     GetEngine().GetPS().AddParticle(particle);
@@ -32,6 +32,6 @@ void Rocket::Update(float dt) {
 
 void Rocket::OnCollision(Actor* other){
     if (other->tag != tag) {
-        alive = false;
+        dead = true;
     }
 }

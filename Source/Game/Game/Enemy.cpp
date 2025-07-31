@@ -63,7 +63,7 @@ void Enemy::Update(float dt){
 
 void Enemy::OnCollision(Actor* other) {
     if (other->tag != tag) {
-        alive = false;
+        dead = true;
         scene->GetGame()->AddPoints(100);
         for (int i = 0; i < 100; i++) {
             Particle particle;

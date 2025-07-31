@@ -6,8 +6,7 @@ public:
 	Rocket() = default;
 	Rocket(const bacon::Transform& transform, std::shared_ptr<bacon::Model> model) :
 		Actor{ transform, model }
-	{
-	}
+	{}
 
 	void Update(float dt) override;
 

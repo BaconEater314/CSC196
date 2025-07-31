@@ -71,7 +71,7 @@ void SpaceGame::Update(float dt){
     {
         m_enemySpawnTimer -= dt;
         if (m_enemySpawnTimer <= 0) {
-            m_enemySpawnTimer = 4;
+            m_enemySpawnTimer = 3;
 
             //create enemies
             std::shared_ptr<Model> enemyModel = std::make_shared<Model>(GameData::enemyPoints, vec3{ 1,1,0 });
@@ -90,7 +90,6 @@ void SpaceGame::Update(float dt){
         m_stateTimer -= dt;
         if (m_stateTimer <= 0) {
             m_lives--;
-            m_score -= 100;
             if (m_lives <= 0) {
                 m_gameState = GameState::GameOver;
                 m_stateTimer = 3;

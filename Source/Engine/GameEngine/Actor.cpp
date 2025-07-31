@@ -3,11 +3,11 @@
 
 namespace bacon{
 	void Actor::Update(float dt) {
-		if (!alive) return;
+		if (dead) return;
 
 		if (lifespan != 0) {
 			lifespan -= dt;
-			alive != lifespan <= 0;
+			dead = lifespan <= 0;
 		}
 
 		transform.position += velocity * dt;
@@ -15,7 +15,7 @@ namespace bacon{
 	}
 
 	void Actor::Draw(Renderer& renderer) {
-		if (!alive) return;
+		if (dead) return;
 
 		m_model->Draw(renderer, transform);
 	}

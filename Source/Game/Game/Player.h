@@ -15,7 +15,7 @@ public:
 public:
 	float speed;
 	float rotationRate;
-	float fireRate = 0.2f;
+	float fireRate = 0.3f;
 	float fireTimer = 0.0f;
 
 private:

@@ -13,6 +13,7 @@
 #include "Game/SpaceGame.h"
 #include "Renderer/Font.h"
 #include "Renderer/Text.h"
+#include "Core/File.h"
 
 #include "Game/Player.h"
 
@@ -23,6 +24,7 @@
 using namespace bacon;
 
 int main(int argc, char* argv[]) {
+
     //initialize Engine
     GetEngine().Initialize();
 
@@ -50,13 +52,13 @@ int main(int argc, char* argv[]) {
     SDL_FRect greenSquare{ 270, 190, 200, 200 };
 
     // sound work
-    GetEngine().GetAudio().AddSound("drums/bass.wav", "bass");
-    GetEngine().GetAudio().AddSound("drums/snare.wav", "snare");
-    GetEngine().GetAudio().AddSound("drums/clap.wav", "clap");
-    GetEngine().GetAudio().AddSound("drums/cowbell.wav", "cowbell");
-    GetEngine().GetAudio().AddSound("pipe.wav", "pipe");
-    GetEngine().GetAudio().AddSound("fart.wav", "fart");
-    GetEngine().GetAudio().AddSound("yippee.wav", "yippee");
+    GetEngine().GetAudio().AddSound("Assets/drums/bass.wav", "bass");
+    GetEngine().GetAudio().AddSound("Assets/drums/snare.wav", "snare");
+    GetEngine().GetAudio().AddSound("Assets/drums/clap.wav", "clap");
+    GetEngine().GetAudio().AddSound("Assets/drums/cowbell.wav", "cowbell");
+    GetEngine().GetAudio().AddSound("Assets/pipe.wav", "pipe");
+    GetEngine().GetAudio().AddSound("Assets/fart.wav", "fart");
+    GetEngine().GetAudio().AddSound("Assets/yippee.wav", "yippee");
     
 
     // Main loop
