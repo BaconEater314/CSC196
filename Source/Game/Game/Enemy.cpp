@@ -7,17 +7,31 @@
 #include "GameData.h"
 #include "Math/Vector3.h"
 #include "Renderer/Model.h"
+#include "Renderer/ParticleSystem.h"
+#include "Core/Random.h"
+#include "Math/Vector2.h"
 
 using namespace bacon;
 
 void Enemy::Update(float dt){
 
     Actor* player = scene->GetActorByName("player");
+
+    bool playerSeen = false;
+
     if (player) {
         vec2 direction{ 0,0 };
         direction = player->transform.position - transform.position;
+        
         direction = direction.Normalized();
-        transform.rotation = math::radToDeg(direction.Angle());
+        vec2 forward = vec2{ 1,0 }.Rotate(math::degToRad(transform.rotation));
+
+        float angle = vec2::SignedAngleBetween(forward,direction);
+        angle = math::sign(angle);
+        transform.rotation += math::radToDeg(angle * dt * 5);
+
+        angle = math::radToDeg(vec2::AngleBetween(forward, direction));
+        playerSeen = angle < 30;
     }
 
 
@@ -28,7 +42,7 @@ void Enemy::Update(float dt){
     transform.position.y = math::wrap(transform.position.y, 0.0f, (float)GetEngine().GetRenderer().GetHeight());
 
     fireTimer -= dt;
-    if (fireTimer <= 0) {
+    if (fireTimer <= 0 && playerSeen) {
         fireTimer = fireRate;
 
         std::shared_ptr<Model> model = std::make_shared<Model>(GameData::rocketPoints, vec3{ 1,1,1 });
@@ -51,5 +65,13 @@ void Enemy::OnCollision(Actor* other) {
     if (other->tag != tag) {
         alive = false;
         scene->GetGame()->AddPoints(100);
+        for (int i = 0; i < 100; i++) {
+            Particle particle;
+            particle.position = transform.position;
+            particle.velocity = random::onUnitCircle() * random::getReal(10.0f, 200.0f);
+            particle.color = vec3{ 1, 1, 1 };
+            particle.lifespan = 2;
+            GetEngine().GetPS().AddParticle(particle);
+        }
     }
 }

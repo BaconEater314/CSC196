@@ -18,11 +18,11 @@
 
 #include <vector>
 #include <memory>
+#include <iostream>
 
 using namespace bacon;
 
 int main(int argc, char* argv[]) {
-    
     //initialize Engine
     GetEngine().Initialize();
 

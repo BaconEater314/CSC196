@@ -31,10 +31,10 @@ namespace bacon {
 		Vector2& operator *= (const Vector2& v) { x *= v.x; y *= v.y; return *this; };
 		Vector2& operator /= (const Vector2& v) { x /= v.x; y /= v.y; return *this; };
 
-		Vector2& operator -= (float s) { x -= s.x; y -= s.y; return *this; };
-		Vector2& operator += (float s) { x += s.x; y += s.y; return *this; };
-		Vector2& operator *= (float s) { x *= s.x; y *= s.y; return *this; };
-		Vector2& operator /= (float s) { x /= s.x; y /= s.y; return *this; };
+		Vector2& operator -= (float s) { x -= s; y -= s; return *this; };
+		Vector2& operator += (float s) { x += s; y += s; return *this; };
+		Vector2& operator *= (float s) { x *= s; y *= s; return *this; };
+		Vector2& operator /= (float s) { x /= s; y /= s; return *this; };
 
 		// square root of (x^2 + y^2)
 		float LengthSqr() const { return (x * x) + (y * y); }
@@ -64,6 +64,25 @@ namespace bacon {
 			v.y = x * math::sinf(radians) + y * math::cosf(radians);
 
 			return v;
+		}
+
+		static float Dot(const Vector2 a, const Vector2 b) {
+			return (a.x * b.x) + (a.y * b.y);
+		}
+
+		static float Cross(const Vector2 a, const Vector2 b) {
+			return (a.x * b.y) - (a.y * b.x);
+		}
+
+		static float AngleBetween(const Vector2 a, const Vector2 b) {
+			return math::acosf(Dot(a,b));
+		}
+
+		static float SignedAngleBetween(const Vector2 a, const Vector2 b) {
+			float x = Dot(a, b);
+			float y = Cross(a, b);
+
+			return math::atan2f(y, x);
 		}
 	};
 

@@ -17,8 +17,8 @@ void Player::Update(float dt){
 
     Particle particle;
     particle.position = transform.position;
-    //particle.velocity = vec2{ random::GetReal(-200,200),random::GetReal(-200,200) };
-    particle.velocity = vec2{ 200,0 };
+    particle.velocity = vec2{ random::getReal(-200.0f,200.0f),random::getReal(-200.0f,200.0f) };
+    //particle.velocity = vec2{ 200,0 };
     particle.color = { 1,1,1 };
     particle.lifespan = 2;
     GetEngine().GetPS().AddParticle(particle);

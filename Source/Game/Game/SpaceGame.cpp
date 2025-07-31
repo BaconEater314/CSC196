@@ -108,6 +108,12 @@ void SpaceGame::Update(float dt){
         break;
     }
 
+    if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_Q)) {
+        GetEngine().GetTime().setTimeScale(0.5f);
+    } else {
+        GetEngine().GetTime().setTimeScale(1);
+    }
+
     m_scene->Update(GetEngine().GetTime().GetDeltaTime());
 }
 
@@ -135,6 +141,27 @@ void SpaceGame::Draw(class Renderer& renderer){
 void SpaceGame::OnPlayerDeath(){
     m_gameState = GameState::PlayerDead;
     m_stateTimer = 2;
+}
+
+void SpaceGame::SpawnEnemy(){
+    Player* player = m_scene->GetActorByName<Player>("player");
+    if (player) {
+
+        //create enemies
+        std::shared_ptr<Model> enemyModel = std::make_shared<Model>(GameData::enemyPoints, vec3{ 1,1,0 });
+
+        vec2 position = player->transform.position + random::onUnitCircle();
+        Transform transform{ position, random::getReal(0.0f,360.0f), 10};
+
+        
+        std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, enemyModel);
+        enemy->damping = 1.5f;
+        enemy->fireRate = 3;
+        enemy->fireTimer = 5;
+        enemy->speed = (random::GetRandomFloat() * 300) + 300;
+        enemy->tag = "enemy";
+        m_scene->AddActor(std::move(enemy));
+    }
 }
 
 void SpaceGame::Kill() {

@@ -4,7 +4,7 @@
 #include "Renderer/Font.h"
 #include "Renderer/Text.h"
 
-class SpaceGame : bacon::Game {
+class SpaceGame : public bacon::Game {
 public:
 	enum class GameState {
 		Initialize,
@@ -25,6 +25,8 @@ public:
 	void Draw(class bacon::Renderer& renderer) override;
 
 	void OnPlayerDeath();
+
+	void SpawnEnemy();
 
 private:
 	GameState m_gameState = GameState::Initialize;

@@ -32,6 +32,10 @@ namespace bacon::math {
 
 		return min + result;
 	}
+	template<typename T>
+	inline T sign(T v) {
+		return (v < 0) ? (T)-1 : (v > 0) ? (T)1 : (T)0;
+	}
 
 	using std::min;
 	using std::max;
@@ -40,8 +44,12 @@ namespace bacon::math {
 	using std::sqrtf;
 	using std::sin;
 	using std::sinf;
+	using std::asin;
+	using std::asinf;
 	using std::cos;
 	using std::cosf;
+	using std::acos;
+	using std::acosf;
 	using std::tan;
 	using std::tanf;
 	using std::atan2;
