@@ -50,6 +50,7 @@ void SpaceGame::Update(float dt){
         m_lives = 3;
         dreadAlive = false;
         playGameOver = true;
+        m_songTimer = 0;
         m_gameState = GameState::StartRound;
         break;
     case SpaceGame::GameState::StartRound:
@@ -86,6 +87,13 @@ void SpaceGame::Update(float dt){
             SpawnDreadnought();
         }
         if (m_scene->GetActorByName("dread") == nullptr) dreadAlive = false;
+
+        if (m_songTimer == 0) {
+            //GetEngine().GetAudio().PlaySound("music");
+            m_songTimer == 146;
+        } else {
+            m_songTimer -= 1;
+        }
     }
         break;
     case SpaceGame::GameState::PlayerDead:

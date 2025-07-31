@@ -59,11 +59,12 @@ int main(int argc, char* argv[]) {
     GetEngine().GetAudio().AddSound("Assets/Sounds/pipe.wav", "pipe");
     GetEngine().GetAudio().AddSound("Assets/Sounds/fart.wav", "fart");
     GetEngine().GetAudio().AddSound("Assets/Sounds/yippee.wav", "yippee");
-    GetEngine().GetAudio().AddSound("Assets/Sounds/impact2.wav", "other_impact");
+    GetEngine().GetAudio().AddSound("Assets/Sounds/impact2.wav", "impact");
     GetEngine().GetAudio().AddSound("Assets/Sounds/pew.wav", "pew");
-    GetEngine().GetAudio().AddSound("Assets/Sounds/impact.wav", "impact");
+    GetEngine().GetAudio().AddSound("Assets/Sounds/impact.wav", "other_impact");
     GetEngine().GetAudio().AddSound("Assets/Sounds/game_over.wav", "game_over");
     GetEngine().GetAudio().AddSound("Assets/Sounds/laser.wav", "laser");
+    GetEngine().GetAudio().AddSound("Assets/Sounds/game_music.wav", "music");
     
 
     // Main loop
