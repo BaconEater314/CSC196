@@ -46,7 +46,7 @@ void SpaceGame::Update(float dt){
         }
         break;
     case SpaceGame::GameState::StartGame:
-        m_score = 1000;
+        m_score = 0;
         m_lives = 3;
         dreadAlive = false;
         playGameOver = true;
@@ -193,7 +193,7 @@ void SpaceGame::SpawnDreadnought() {
 
         std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, dreadModel);
         enemy->damping = 1.5f;
-        enemy->fireRate = 0.05;
+        enemy->fireRate = 0.25;
         enemy->fireTimer = 3;
         enemy->health = 5;
         enemy->speed = (random::GetRandomFloat() * 50) + 200;
